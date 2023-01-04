@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using SampleIdentityServer.UI;
 using SampleIdentityServer.UI.Models;
+using SampleIdentityServer.UI.Repository;
+using SampleIdentityServer.UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,15 +13,16 @@ builder.Services.AddDbContext<MyDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("LocalDb"));
 });
+builder.Services.AddScoped<ICustomUserRepository, CustomUserRepository>();
 
 builder.Services.AddIdentityServer()
     .AddInMemoryApiResources(Config.GetApiResource())
     .AddInMemoryApiScopes(Config.GetApiScopes())
     .AddInMemoryClients(Config.GetClients())
     .AddInMemoryIdentityResources(Config.GetIdentityResources())
-    .AddTestUsers(Config.GetUsers().ToList())
-    .AddDeveloperSigningCredential(); //bu kod public key ile privet key oluþturur. eðerki production çýkacaksan da addsigningCredantial kullanýlýr.
-
+    //.AddTestUsers(Config.GetUsers().ToList())
+    .AddDeveloperSigningCredential() //bu kod public key ile privet key oluþturur. eðerki production çýkacaksan da addsigningCredantial kullanýlýr.
+    .AddProfileService<CustomProfileService>();
 
 var app = builder.Build();
 

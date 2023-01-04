@@ -55,6 +55,7 @@ namespace SampleIdentityServer.UI
         {
             return new List<IdentityResource>
             {
+                new IdentityResources.Email(), //bunu yaptığımızda login olduğumuzda emial de gelecektir. 
                 new IdentityResources.OpenId(), //open ıd bu token kimin hakkında. Kullanıcı işin içine girdiği zaman mecbur openıd olmak zorunda.
                 new IdentityResources.Profile(),
                 new IdentityResource()
@@ -136,7 +137,7 @@ namespace SampleIdentityServer.UI
                     AllowedGrantTypes=GrantTypes.Hybrid,
                     RedirectUris=new List<string>{ "https://localhost:5006/signin-oidc" }, //bu url token alma için işe yarar. Autheriztion server bu url döner ve otamatik döner identity server üzerinden token alınır. 
                     PostLogoutRedirectUris=new List<string>{ "https://localhost:5006/signout-callback-oidc" },
-                    AllowedScopes={IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile,"api1.read",IdentityServerConstants.StandardScopes.OfflineAccess,"CountryAndCity","Roles"}, //bu starıda biz artık ıdnetity resources gidelim ve artık oradaki ıd ve porfile bilgilerini alalım diyoruz. ayrıca uzun bir şekilde sabiptler yani constlar üzerinden gitmeden "openid" yazsakda olur ama daha hatasız oolması için bu yöntemi kullanmak daha sağlıklı.
+                    AllowedScopes={ IdentityServerConstants.StandardScopes.Email, IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile,"api1.read",IdentityServerConstants.StandardScopes.OfflineAccess,"CountryAndCity","Roles"}, //bu starıda biz artık ıdnetity resources gidelim ve artık oradaki ıd ve porfile bilgilerini alalım diyoruz. ayrıca uzun bir şekilde sabiptler yani constlar üzerinden gitmeden "openid" yazsakda olur ama daha hatasız oolması için bu yöntemi kullanmak daha sağlıklı.
                     AccessTokenLifetime=2*60*60, //access token ömrünü verdik defaul oalrak 1 saat alır biz 2 saat verdik
                     AllowOfflineAccess=true, //truya set edildiğinde bir refresh token elde edilir
                     RefreshTokenUsage=TokenUsage.ReUse, //onetime olursa bir kez kullana bilirsin. Reuse olursa sürekli kullanırsın reuse oldugunda aynı refresh tokeni da gönderir
@@ -154,7 +155,7 @@ namespace SampleIdentityServer.UI
                     AllowedGrantTypes=GrantTypes.Hybrid,
                     RedirectUris=new List<string>{ "https://localhost:5011/signin-oidc" }, //bu url token alma için işe yarar. Autheriztion server bu url döner ve otamatik döner identity server üzerinden token alınır. 
                     PostLogoutRedirectUris=new List<string>{ "https://localhost:5011/signout-callback-oidc" },
-                    AllowedScopes={IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile,"api1.read","api2.read",IdentityServerConstants.StandardScopes.OfflineAccess,"CountryAndCity","Roles"}, //bu starıda biz artık ıdnetity resources gidelim ve artık oradaki ıd ve porfile bilgilerini alalım diyoruz. ayrıca uzun bir şekilde sabiptler yani constlar üzerinden gitmeden "openid" yazsakda olur ama daha hatasız oolması için bu yöntemi kullanmak daha sağlıklı.
+                    AllowedScopes={  IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile,"api1.read","api2.read",IdentityServerConstants.StandardScopes.OfflineAccess,"CountryAndCity","Roles"}, //bu starıda biz artık ıdnetity resources gidelim ve artık oradaki ıd ve porfile bilgilerini alalım diyoruz. ayrıca uzun bir şekilde sabiptler yani constlar üzerinden gitmeden "openid" yazsakda olur ama daha hatasız oolması için bu yöntemi kullanmak daha sağlıklı.
                     AccessTokenLifetime=2*60*60, //access token ömrünü verdik defaul oalrak 1 saat alır biz 2 saat verdik
                     AllowOfflineAccess=true, //truya set edildiğinde bir refresh token elde edilir
                     RefreshTokenUsage=TokenUsage.ReUse, //onetime olursa bir kez kullana bilirsin. Reuse olursa sürekli kullanırsın reuse oldugunda aynı refresh tokeni da gönderir
