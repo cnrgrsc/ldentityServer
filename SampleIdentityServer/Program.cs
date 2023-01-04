@@ -1,10 +1,16 @@
+using Microsoft.EntityFrameworkCore;
 using SampleIdentityServer.UI;
+using SampleIdentityServer.UI.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddDbContext<MyDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("LocalDb"));
+});
 
 builder.Services.AddIdentityServer()
     .AddInMemoryApiResources(Config.GetApiResource())
